@@ -323,16 +323,33 @@
 
             // I LOVE YOU TEXT Vandiep
             const loveCanvas = document.createElement('canvas');
-            loveCanvas.width = 1024; loveCanvas.height = 256;
+            // Tăng chiều rộng canvas để đủ chỗ cho dòng chữ dài
+            loveCanvas.width = 1200; loveCanvas.height = 256;
             const lCtx = loveCanvas.getContext('2d');
-            lCtx.font = 'bold 120px "Segoe UI", sans-serif';
-            lCtx.fillStyle = '#FF69B4'; lCtx.textAlign = 'center';
-            lCtx.shadowColor = "#FF1493"; lCtx.shadowBlur = 40; 
-            lCtx.fillText("I LOVE YOU ❤️", 512, 130);
+
+            // 1. Giữ nguyên màu sắc và hiệu ứng glow cũ
+            lCtx.fillStyle = '#FF69B4'; // Màu hồng cũ
+            lCtx.shadowColor = "#FF1493"; lCtx.shadowBlur = 40; // Hiệu ứng phát sáng cũ
+
+            // 2. Chỉnh font nhỏ lại (60px) vì câu chúc dài hơn chữ I Love You
+            lCtx.font = 'bold italic 60px "Segoe UI", sans-serif';
+
+            // 3. Canh lề trái trong khung vẽ
+            lCtx.textAlign = 'left';
+            // Vẽ chữ bắt đầu từ tọa độ x=50 (cách lề trái canvas một chút)
+            lCtx.fillText("Chúc dợ iuuu giáng sinh an lành ❤️", 50, 150);
+
             const loveTex = new THREE.CanvasTexture(loveCanvas);
+            // Tạo vật liệu giữ nguyên hiệu ứng sáng rực (AdditiveBlending)
             const loveMat = new THREE.MeshBasicMaterial({ map: loveTex, transparent: true, blending: THREE.AdditiveBlending });
-            loveMesh = new THREE.Mesh(new THREE.PlaneGeometry(70, 18), loveMat);
-            loveMesh.position.set(0, 0, 20);
+            
+            // Tăng kích thước tấm bảng 3D lên (85, 18) để chứa hết chiều dài chữ
+            loveMesh = new THREE.Mesh(new THREE.PlaneGeometry(85, 18), loveMat);
+            
+            // 4. Đặt vị trí 3D qua bên trái (x = -38)
+            // Tọa độ (0,0,20) cũ là ở giữa, giờ đổi thành (-38, 0, 20)
+            loveMesh.position.set(-38, 0, 20);
+            
             loveMesh.visible = false;
             scene.add(loveMesh);
         }
