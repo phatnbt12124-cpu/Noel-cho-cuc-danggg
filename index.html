@@ -323,29 +323,18 @@
 
             // I LOVE YOU TEXT Vandiep
            const loveCanvas = document.createElement('canvas');
-loveCanvas.width = 1024; loveCanvas.height = 512; // Tăng chiều cao để đủ chỗ 2 dòng
-const lCtx = loveCanvas.getContext('2d');
-
-function drawHeartText(show) {
-    lCtx.clearRect(0, 0, 1024, 512);
-    if (!show) return;
-
-    // Cấu hình Style chung (Y chang mẫu của bạn)
-    lCtx.fillStyle = '#FF69B4';
-    lCtx.shadowColor = "#FF1493";
-    lCtx.shadowBlur = 40;
-    lCtx.font = 'bold 70px "Segoe UI", sans-serif'; 
-
-    // 1. Dòng chúc bên trái (Vị trí x=50 để sát lề trái)
-    lCtx.textAlign = 'left';
-    lCtx.fillText("Chúc dợ iuuu", 50, 150);
-    lCtx.fillText("giáng sinh an lành", 50, 250);
-
-    // 2. Chữ I LOVE YOU (Giữ nguyên cỡ to, căn giữa)
-    lCtx.textAlign = 'center';
-    lCtx.font = 'bold 120px "Segoe UI", sans-serif';
-    lCtx.fillText("I LOVE YOU ❤️", 512, 450);
-}
+            loveCanvas.width = 1024; loveCanvas.height = 256;
+            const lCtx = loveCanvas.getContext('2d');
+            lCtx.font = 'bold 120px "Segoe UI", sans-serif';
+            lCtx.fillStyle = '#FF69B4'; lCtx.textAlign = 'center';
+            lCtx.shadowColor = "#FF1493"; lCtx.shadowBlur = 40; 
+            lCtx.fillText("I LOVE YOU ❤️", 512, 130);
+            const loveTex = new THREE.CanvasTexture(loveCanvas);
+            const loveMat = new THREE.MeshBasicMaterial({ map: loveTex, transparent: true, blending: THREE.AdditiveBlending });
+            loveMesh = new THREE.Mesh(new THREE.PlaneGeometry(70, 18), loveMat);
+            loveMesh.position.set(0, 0, 20);
+            loveMesh.visible = false;
+            scene.add(loveMesh);
         }
 
         function updateParticleGroup(group, type, targetState, speed, handRotY, time) {
